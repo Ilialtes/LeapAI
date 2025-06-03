@@ -1,0 +1,66 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+.env
+.env*.local
+.env.development.local
+.env.production.local
+
+# Next.js
+.next/
+out/
+build/
+.DS_Store
+*.pem
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-emulator-data/
+database-debug.log
+firestore-debug.log
+pubsub-debug.log
+storage-debug.log
+
+# Firebase Cloud Functions
+functions/node_modules/
+functions/lib/ # Compiled TypeScript
+functions/.env* # Environment variables for functions (should be gitignored)
+# Note: functions/.env.local is good for local dev, but generally all .env files in functions dir should be ignored.
+
+# Editor/IDE specific
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS specific
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+# Linux
+*~
+
+# Other
+*.zip
+*.tar.gz
+*.rar
+*.patch
+
+# Cache files
+.eslintcache
+.next/cache
+
+# Testing
+coverage/
