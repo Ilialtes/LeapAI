@@ -2,8 +2,8 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 // Add other Firebase services as needed, e.g., getAuth, getFirestore
-// import { getAuth } from "firebase/auth";
-// import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 // import { getFunctions } from "firebase/functions"; // Import for Cloud Functions
 // import { connectAuthEmulator } from "firebase/auth"; // For emulators
 // import { connectFirestoreEmulator } from "firebase/firestore"; // For emulators
@@ -32,8 +32,8 @@ if (!getApps().length) {
 const analytics = getAnalytics(app);
 
 export const firebaseApp = app;
-// export const auth = getAuth(app); // Uncomment once you need auth
-// export const db = getFirestore(app); // Uncomment once you need Firestore
+ export const auth = getAuth(app); // Uncomment once you need auth
+export const db = getFirestore(app); // Uncomment once you need Firestore
 // export const functions = getFunctions(app); // Uncomment for callable functions
 
 // Example for connecting to Firebase Emulators during development
