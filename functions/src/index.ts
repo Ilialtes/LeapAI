@@ -131,7 +131,7 @@ export const getAICoachingResponse = functions.https.onCall(async (data: AICoach
   if (!geminiApiKey) {
     // Option 2: Environment variable (less common for callable functions, more for HTTP)
     // geminiApiKey = process.env.GEMINI_API_KEY; // Ensure this is set in your Cloud Functions environment
-    
+
     // If still no key, log an error and exit.
     // In a real app, you might return a specific error or have a fallback.
     functions.logger.error("GEMINI_API_KEY is not configured. Please set leap_ai.gemini_key in Firebase functions config.");
@@ -197,7 +197,7 @@ Provide some encouraging and actionable feedback based on this check-in, keeping
       { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
       { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
     ];
-    
+
     // For text-only input
     const result = await model.generateContent({
         contents: [{ role: "user", parts: [{text: prompt}] }],
@@ -212,7 +212,7 @@ Provide some encouraging and actionable feedback based on this check-in, keeping
       functions.logger.error("Gemini API call failed or returned an empty response:", result);
       throw new functions.https.HttpsError("internal", "Failed to get response from AI service.");
     }
-    
+
     functions.logger.info("Received AI response:", aiResponseText);
 
     // 6. Save AI response to DailyCheckin document
