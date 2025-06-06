@@ -1,9 +1,16 @@
 import Image from "next/image";
+import Link from 'next/link'; // Ensure Link is imported
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        {/* Added Link Here */}
+        <div style={{ marginBottom: '2rem', padding: '1rem', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: 'white', color: 'black' }}>
+          <Link href="/auth/test-google-signin" style={{ textDecoration: 'underline', color: 'blue' }}>
+            Test Google Sign-In Page
+          </Link>
+        </div>
         <Image
           className="dark:invert"
           src="/next.svg"
