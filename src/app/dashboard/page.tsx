@@ -2,27 +2,22 @@
 "use client";
 
 import React from 'react';
+import AppHeader from '@/components/layout/AppHeader'; // IMPORT AppHeader
 import GoalCard from '@/components/dashboard/GoalCard';
 import ProgressBar from '@/components/ui/ProgressBar';
-// Ensure all necessary icons are imported, adding BookText
-import { Bookmark, Rocket, Trophy, CheckCircle2, Flame, Sparkles, BookText } from 'lucide-react';
+// Remove BookText from here if it's only used in AppHeader now
+import { Bookmark, Rocket, Trophy, CheckCircle2, Flame, Sparkles } from 'lucide-react';
 
 export default function DashboardPage() {
-  const userName = "Alex";
+  const userName = "Alex"; // This could be sourced from context/auth state later
 
   return (
     <div className="min-h-screen bg-slate-50 text-gray-800 font-sans">
-      {/* New Main Application Header */}
-      <header className="flex justify-between items-center px-6 sm:px-8 md:px-10 py-4 border-b border-slate-200">
-        <div className="flex items-center gap-2">
-          <BookText className="w-7 h-7 text-blue-600" />
-          <span className="text-xl font-bold text-gray-800">Leap AI</span>
-        </div>
-        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gray-300" title="User Avatar"></div> {/* Avatar moved here */}
-      </header>
+      {/* Use AppHeader */}
+      <AppHeader showSettingsIcon={false} />
 
-      {/* This main is now the single white card */}
-      <main className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-10 my-6 sm:my-8"> {/* Added my-6 sm:my-8 for spacing around the card */}
+      {/* The rest of the dashboard main content card and footer remains */}
+      <main className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-10 my-6 sm:my-8">
 
         {/* Welcome Message - no longer in its own header, direct child of main card */}
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-8 sm:mb-10">
@@ -57,38 +52,6 @@ export default function DashboardPage() {
               />
             </div>
           </section>
-
-          {/* Sidebar for "Daily Check-in" & "Momentum" - Spanning 1 column */}
-          <aside className="lg:col-span-1 flex flex-col gap-6 sm:gap-8">
-            {/* Daily Check-in Card */}
-            <section>
-              <div className="flex items-center gap-2 mb-4">
-                <CheckCircle2 className="w-5 h-5 text-green-600" />
-                <h2 className="text-lg font-semibold text-gray-700">Daily Check-in</h2>
-              </div>
-              <div className="bg-white rounded-xl shadow-md p-6">
-                <p className="text-sm text-gray-600 mb-3">Today's check-in progress</p>
-                <div className="flex items-center gap-3 mb-1">
-                  <ProgressBar progress={75} barColor="bg-green-500" height="h-3" />
-                  <span className="text-sm font-medium text-green-600">75%</span>
-                </div>
-                <p className="text-xs text-gray-500">3 of 4 questions answered</p>
-              </div>
-            </section>
-
-            {/* Momentum Card */}
-            <section>
-              <div className="flex items-center gap-2 mb-4">
-                <Flame className="w-5 h-5 text-orange-500" />
-                <h2 className="text-lg font-semibold text-gray-700">Momentum</h2>
-              </div>
-              <div className="bg-amber-50 rounded-xl shadow-md p-6 text-center"> {/* Using bg-amber-50 for a soft orange/peach */}
-                <p className="text-amber-800 font-semibold">Current Streak</p>
-                <p className="text-5xl font-bold text-amber-600 my-2">7 days</p>
-                <p className="text-sm text-amber-700">Keep up the great work!</p>
-              </div>
-            </section>
-          </aside>
 
           {/* "Daily Check-in" Section - formerly in aside */}
           <section> {/* Added mt-0 here as gap is handled by parent flex */}
