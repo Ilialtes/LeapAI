@@ -1,10 +1,9 @@
 // src/app/goals/[goalId]/page.tsx
-"use client"; // Mark as a Client Component if using hooks like useParams, or for event handlers
+"use client";
 
 import React from 'react';
 import AppNavbar from '@/components/layout/AppNavbar';
 import ProgressBar from '@/components/ui/ProgressBar';
-// Import new icons for check-in history
 import { FilePenLine, CheckSquare2, Square, PlusCircle, CheckCheck, Code, UsersRound } from 'lucide-react';
 
 interface GoalDetailPageProps {
@@ -32,7 +31,6 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
       <AppNavbar />
 
       <main className="max-w-5xl mx-auto bg-white rounded-2xl shadow-md p-8 md:p-10 my-8">
-        {/* Goal Header Section ... */}
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
@@ -47,8 +45,6 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
             <span>Edit Goal</span>
           </button>
         </div>
-
-        {/* Overall Progress Section */}
         <section className="mt-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-base font-semibold text-gray-700">Overall Progress</span>
@@ -57,27 +53,20 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
           <ProgressBar
             progress={overallProgress}
             barColor="bg-indigo-500"
-            height="h-3" // Standard height for progress bars
+            height="h-3"
           />
         </section>
-
-        {/* Progress & Milestones Grid Section */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mt-8"> {/* Added sm:gap-8 */}
-          {/* Left Column: Progress Over Time */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mt-8">
           <div className="border border-slate-200 rounded-lg p-6">
             <div className="flex items-baseline mb-1">
               <span className="text-4xl font-bold text-gray-800">{overallProgress}%</span>
               <span className="text-sm font-semibold text-green-500 ml-2">{progressChange}</span>
             </div>
             <p className="text-sm text-gray-500 mb-4">Last 6 Months</p>
-            {/* Chart Placeholder */}
             <div className="h-48 bg-slate-100 rounded flex items-center justify-center text-sm text-slate-500">
-              {/* Chart will be displayed here. Library like Recharts will be integrated later. */}
               Chart Placeholder
             </div>
           </div>
-
-          {/* Right Column: Milestones */}
           <div className="border border-slate-200 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-700 mb-4">Milestones</h3>
             <div className="space-y-4">
@@ -103,14 +92,24 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
           </div>
         </section>
 
-        {/* Check-in History Section will go here */}
-        <div className="TEMP_CHECKIN_HISTORY_PLACEHOLDER mt-8">Check-in History Placeholder</div>
+        {/* Corrected Check-in History Section */}
+        <section className="mt-8">
+          <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-4 sm:mb-6">Check-in History</h2>
+          <div className="space-y-6">
+            {checkinHistory.map((checkin) => (
+              <div key={checkin.id} className="flex items-start gap-4 p-4 border border-slate-100 rounded-lg hover:bg-slate-50 transition-colors">
+                <div className={`p-2 rounded-full ${checkin.iconBg}`}>
+                  {checkin.icon}
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-700 text-sm sm:text-base">{checkin.title}</p>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-0.5">{checkin.date}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
-
-      {/* Optional Footer */}
-      {/* <footer className="text-center text-xs text-gray-400 py-6 mt-auto">
-           <p>© 2025 Leap AI. All rights reserved.</p>
-         </footer> */}
     </div>
   );
 }
