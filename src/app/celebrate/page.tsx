@@ -3,18 +3,18 @@
 
 import React from 'react';
 import AppHeader from '@/components/layout/AppHeader';
-import ConfettiBar from '@/components/ui/ConfettiBar';
-import { Check, Share2 } from 'lucide-react';
+// ConfettiBar import removed
+import { Check, Share2 } from 'lucide-react'; // Keep other necessary icons
 
 export default function CelebrationPage() {
   const userName = "Sarah";
 
   return (
-    // Root container for the page
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 via-white to-slate-100 text-gray-800 font-sans flex flex-col relative"> {/* Removed items-center justify-center to allow natural flow and scrolling if card is tall */}
-      <ConfettiBar />
+    // Updated root div classes for background
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 to-slate-50 text-gray-800 font-sans flex flex-col relative">
+      {/* ConfettiBar element removed */}
 
-      <div className="absolute top-0 left-0 right-0 z-10"> {/* Or simply ensure AppHeader is first in flow if not fixed */}
+      <div className="absolute top-0 left-0 right-0 z-10">
         <AppHeader showSettingsIcon={false} isTransparent={true} />
       </div>
 
