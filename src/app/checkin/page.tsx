@@ -12,13 +12,14 @@ export default function DailyCheckinPage() {
     <div className="min-h-screen bg-slate-50 text-gray-800 font-sans">
       <AppHeader showSettingsIcon={true} />
 
-      <main className="flex flex-col items-center pt-10 sm:pt-12 md:pt-16 px-4 pb-12"> {/* Added pb-12 for bottom spacing */}
+      {/* Main content now styled as a card */}
+      <main className="flex flex-col items-center bg-white rounded-2xl shadow-md p-6 sm:p-8 md:p-10 my-6 sm:my-8 max-w-4xl mx-auto w-full"> {/* Added max-w-4xl mx-auto w-full for card width control */}
+
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-8 sm:mb-10 md:mb-12">
           How's your day going, {userName}?
         </h1>
 
-        {/* Text Input Area */}
-        <div className="w-full max-w-2xl bg-white rounded-xl shadow-sm p-2 sm:p-3">
+        <div className="w-full max-w-2xl bg-white rounded-xl shadow-sm p-2 sm:p-3 border border-slate-100"> {/* Added border */}
           <textarea
             className="w-full h-32 sm:h-36 border-none focus:ring-0 resize-none p-4 text-gray-700 placeholder-gray-400 text-sm sm:text-base"
             placeholder="Share your thoughts, progress, or any challenges you're facing today..."
@@ -44,15 +45,19 @@ export default function DailyCheckinPage() {
         {/* "Leap AI's Response" Section */}
         <section className="w-full max-w-2xl mt-8">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Leap AI's Response</h2>
-          <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100"> {/* Added border */}
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
               That's fantastic, Sarah! Keep up the great work. Remember, consistency is key to achieving your goals. If you need any support or have questions, feel free to ask. I'm here to help you leap towards success!
             </p>
           </div>
         </section>
 
-        {/* Final Submit Button will go here */}
-        <div className="TEMP_SUBMIT_BUTTON_PLACEHOLDER w-full max-w-2xl mt-12">Submit Button Placeholder</div>
+        <div className="w-full max-w-2xl mt-10 sm:mt-12">
+          <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 sm:px-12 rounded-lg shadow-md flex items-center justify-center gap-2 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <Send className="w-5 h-5" />
+            <span>Submit Update</span>
+          </button>
+        </div>
       </main>
 
       {/* Optional Footer (can be added later if design requires) */}
