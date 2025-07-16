@@ -5,6 +5,7 @@ import React from 'react';
 import AppHeader from '@/components/layout/AppHeader'; // IMPORT AppHeader
 import GoalCard from '@/components/dashboard/GoalCard';
 import ProgressBar from '@/components/ui/ProgressBar';
+import MovieSuggestion from '@/components/MovieSuggestion';
 // Remove BookText from here if it's only used in AppHeader now
 import { Bookmark, Rocket, Trophy, CheckCircle2, Flame, Sparkles } from 'lucide-react';
 
@@ -100,6 +101,11 @@ export default function DashboardPage() {
               <p className="text-5xl font-bold text-amber-600 my-2">7 days</p>
               <p className="text-sm text-amber-700">Keep up the great work!</p>
             </div>
+          </section>
+
+          {/* Movie Suggestion Section */}
+          <section>
+            <MovieSuggestion userEmail="alex@example.com" />
           </section>
         </div>
 
