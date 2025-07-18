@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import AppNavbar from '@/components/layout/AppNavbar';
 import { useAuth } from '@/context/AuthProvider';
-import { Target, Calendar, Tag, FileText, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Target, Calendar, Tag, FileText, X } from 'lucide-react';
 
-export default function NewGoalPage() {
-  const router = useRouter();
+interface NewGoalModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onGoalCreated: () => void;
+}
+
+export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoalModalProps) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,6 +37,20 @@ export default function NewGoalPage() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      title: '',
+      description: '',
+      category: '',
+      dueDate: ''
+    });
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,7 +87,9 @@ export default function NewGoalPage() {
       const result = await response.json();
       
       if (result.success) {
-        router.push('/goals');
+        resetForm();
+        onGoalCreated();
+        onClose();
       } else {
         throw new Error(result.error || 'Failed to create goal');
       }
@@ -83,28 +101,25 @@ export default function NewGoalPage() {
     }
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="min-h-screen bg-slate-50 text-gray-800 font-sans">
-      <AppNavbar />
-      
-      <main className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-8 md:p-10 my-8">
-        <div className="flex items-center gap-4 mb-8">
-          <Link href="/goals">
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-            </button>
-          </Link>
+    <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              Create New Goal
-            </h1>
-            <p className="text-sm sm:text-base text-gray-500 mt-1">
-              Set a new goal and start your journey to success
-            </p>
+            <h2 className="text-xl font-bold text-gray-800">Create New Goal</h2>
+            <p className="text-sm text-gray-500 mt-1">Set a new goal and start your journey to success</p>
           </div>
+          <button
+            onClick={handleClose}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
             <label htmlFor="title" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
               <Target className="w-4 h-4" />
@@ -133,7 +148,7 @@ export default function NewGoalPage() {
               value={formData.description}
               onChange={handleInputChange}
               placeholder="Describe what you want to achieve..."
-              rows={4}
+              rows={3}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors resize-none"
             />
           </div>
@@ -179,15 +194,14 @@ export default function NewGoalPage() {
             </div>
           </div>
 
-          <div className="flex gap-4 pt-6">
-            <Link href="/goals" className="flex-1">
-              <button
-                type="button"
-                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-            </Link>
+          <div className="flex gap-4 pt-4">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               disabled={loading}
@@ -207,7 +221,7 @@ export default function NewGoalPage() {
             </button>
           </div>
         </form>
-      </main>
+      </div>
     </div>
   );
 }

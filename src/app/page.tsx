@@ -2,34 +2,11 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { BookText, ArrowRight, Target, TrendingUp, Users } from 'lucide-react';
+import { ArrowRight, Target, TrendingUp, Users } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-50 text-gray-800 font-sans">
-      {/* Header */}
-      <header className="flex justify-between items-center px-6 sm:px-8 md:px-10 py-4 bg-slate-50 border-b border-slate-200">
-        <div className="flex items-center gap-2">
-          <BookText className="w-7 h-7 text-blue-600" />
-          <span className="text-xl font-bold text-gray-800">Leap AI</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link 
-            href="/auth/signin"
-            className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
-          >
-            Sign In
-          </Link>
-          <Link 
-            href="/auth/signup"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-          >
-            Get Started
-          </Link>
-        </div>
-      </header>
-
-      {/* Main Content */}
+    <div className="bg-slate-50 text-gray-800 font-sans">
       <main className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-12 my-6 sm:my-8">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -97,11 +74,6 @@ export default function Home() {
           </Link>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="text-center text-xs text-gray-400 py-4">
-        <p>© 2025 Leap AI. All rights reserved.</p>
-      </footer>
     </div>
   );
 }

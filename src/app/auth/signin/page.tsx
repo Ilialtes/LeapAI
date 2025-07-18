@@ -47,22 +47,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-gray-800 font-sans">
-      {/* Header */}
-      <header className="flex justify-between items-center px-6 sm:px-8 md:px-10 py-4 bg-slate-50 border-b border-slate-200">
-        <Link href="/" className="flex items-center gap-2 group">
-          <BookText className="w-7 h-7 text-blue-600 group-hover:text-blue-700 transition-colors" />
-          <span className="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors">Leap AI</span>
-        </Link>
-        <Link 
-          href="/auth/signup"
-          className="text-gray-600 hover:text-gray-800 font-medium transition-colors"
-        >
-          Need an account?
-        </Link>
-      </header>
-
-      {/* Main Content */}
+    <div className="bg-slate-50 text-gray-800 font-sans">
       <main className="flex flex-col items-center justify-center px-6 py-12">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
           {/* Title */}
@@ -170,11 +155,6 @@ export default function SignInPage() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="text-center text-xs text-gray-400 py-4">
-        <p>© 2025 Leap AI. All rights reserved.</p>
-      </footer>
     </div>
   );
 }
