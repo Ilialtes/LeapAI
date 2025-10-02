@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Home, User, Settings, LogOut, Film, Target } from 'lucide-react';
+import { Home, User, Settings, LogOut, Target, Award } from 'lucide-react';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebaseConfig';
 import { useAuth } from '@/context/AuthProvider';
@@ -14,10 +14,10 @@ const CommonHeader: React.FC = () => {
   const { user } = useAuth();
 
   const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: Home },
-    { href: '/goals', label: 'Goals', icon: Target },
+    { href: '/dashboard', label: 'Focus', icon: Home },
+    { href: '/goals-overview', label: 'Goals', icon: Target },
+    { href: '/trophy-room', label: 'Trophies', icon: Award },
     { href: '/profile', label: 'Profile', icon: User },
-    { href: '/test-mcp', label: 'Movie AI', icon: Film },
   ];
 
   const isActive = (href: string) => {
@@ -46,7 +46,7 @@ const CommonHeader: React.FC = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">LA</span>
               </div>
-              <span className="text-xl font-bold text-gray-800">Leap AI</span>
+              <span className="text-xl font-bold" style={{color: '#2E7D32'}}>Leap AI</span>
             </Link>
           </div>
 
@@ -62,9 +62,22 @@ const CommonHeader: React.FC = () => {
                       href={item.href}
                       className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                         isActive(item.href)
-                          ? 'bg-blue-50 text-blue-600 font-medium'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                          ? 'bg-blue-50 font-medium'
+                          : 'hover:bg-gray-50'
                       }`}
+                      style={{
+                        color: isActive(item.href) ? '#1565C0' : '#546E7A'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive(item.href)) {
+                          e.currentTarget.style.color = '#2E7D32';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive(item.href)) {
+                          e.currentTarget.style.color = '#546E7A';
+                        }
+                      }}
                     >
                       <Icon className="w-4 h-4" />
                       <span>{item.label}</span>
@@ -78,9 +91,12 @@ const CommonHeader: React.FC = () => {
                   href="/"
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                     pathname === '/'
-                      ? 'bg-blue-50 text-blue-600 font-medium'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'bg-blue-50 font-medium'
+                      : 'hover:bg-gray-50'
                   }`}
+                  style={{
+                    color: pathname === '/' ? '#1565C0' : '#546E7A'
+                  }}
                 >
                   <Home className="w-4 h-4" />
                   <span>Home</span>
@@ -112,13 +128,17 @@ const CommonHeader: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Link
                   href="/auth/signin"
-                  className="text-gray-600 hover:text-gray-800 font-medium transition-colors px-3 py-2"
+                  className="font-medium transition-colors px-3 py-2 hover:opacity-80"
+                  style={{color: '#546E7A'}}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                  className="text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                  style={{backgroundColor: '#2E7D32'}}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1B5E20'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2E7D32'}
                 >
                   Get Started
                 </Link>

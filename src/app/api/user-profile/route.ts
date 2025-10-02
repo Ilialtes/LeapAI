@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { updateUserAge, getUserProfile } from '@/services/mcpAssistant';
+import { updateUserAge, getUserProfile, updateUserProfile } from '@/services/mcpAssistant';
 
 export async function GET(request: NextRequest) {
   try {
@@ -38,8 +38,43 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const body = await request.json();
+    const { email, ...profileData } = body;
+
+    if (!email) {
+      return NextResponse.json(
+        { error: 'Email is required' },
+        { status: 400 }
+      );
+    }
+
+    const success = await updateUserProfile({ email, profileData });
+
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Failed to update user profile' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      message: 'User profile updated successfully',
+      success: true
+    });
+
+  } catch (error) {
+    console.error('Update user profile API error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
     const { email, age } = await request.json();
-    
+
     if (!email || !age) {
       return NextResponse.json(
         { error: 'Email and age are required' },
@@ -48,7 +83,7 @@ export async function POST(request: NextRequest) {
     }
 
     const success = await updateUserAge({ email, age });
-    
+
     if (!success) {
       return NextResponse.json(
         { error: 'Failed to update user age' },
@@ -56,11 +91,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'User age updated successfully',
-      success: true 
+      success: true
     });
-    
+
   } catch (error) {
     console.error('Update user age API error:', error);
     return NextResponse.json(

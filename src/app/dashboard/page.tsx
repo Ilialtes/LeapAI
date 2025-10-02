@@ -1,67 +1,27 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import ProgressBar from '@/components/ui/ProgressBar';
-import GoalCoach from '@/components/GoalCoach';
-import TopGoalsSection from '@/components/dashboard/TopGoalsSection';
-import NewGoalModal from '@/components/modals/NewGoalModal';
+import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthProvider';
-import { Bookmark, CheckCircle2, Flame, Sparkles, Target, Plus } from 'lucide-react';
+import { useAchievements } from '@/context/AchievementContext';
+import { useRouter } from 'next/navigation';
+import { Focus } from 'lucide-react';
 import Link from 'next/link';
+import FirstStepModal from '@/components/modals/FirstStepModal';
+import DailyIndicator from '@/components/DailyIndicator';
+import AchievementUnlockedModal from '@/components/modals/AchievementUnlockedModal';
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const [goals, setGoals] = useState([]);
-  const [totalStreak, setTotalStreak] = useState(0);
-  const [todayCheckins, setTodayCheckins] = useState(0);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-
-  const fetchDashboardData = async () => {
-    if (!user?.email) return;
-
-    try {
-      const response = await fetch(`/api/goals?userEmail=${encodeURIComponent(user.email)}`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          setGoals(data.goals);
-          
-          // Calculate total streak and today's checkins
-          let maxStreak = 0;
-          let checkins = 0;
-          const today = new Date().toISOString().split('T')[0];
-          
-          data.goals.forEach((goal: any) => {
-            if (goal.currentStreak && goal.currentStreak > maxStreak) {
-              maxStreak = goal.currentStreak;
-            }
-            if (goal.checkinHistory) {
-              const todayCheckins = goal.checkinHistory.filter((checkin: any) => {
-                const checkinDate = new Date(checkin.timestamp || checkin.date).toISOString().split('T')[0];
-                return checkinDate === today;
-              });
-              checkins += todayCheckins.length;
-            }
-          });
-          
-          setTotalStreak(maxStreak);
-          setTodayCheckins(checkins);
-        }
-      }
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, [user?.email]);
+  const { newBadges } = useAchievements();
+  const router = useRouter();
+  const [showFirstStepModal, setShowFirstStepModal] = useState(false);
+  const [showAchievementModal, setShowAchievementModal] = useState(false);
 
   if (!user) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Please sign in to view your dashboard</h1>
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">Please sign in to start focusing</h1>
           <Link href="/auth/signin" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg">
             Sign In
           </Link>
@@ -70,81 +30,72 @@ export default function DashboardPage() {
     );
   }
 
+  const handleFocusRoomClick = () => {
+    // Navigate directly to the immediate immersion Focus Room
+    router.push('/focus-room');
+  };
+
   return (
-    <div className="bg-slate-50 text-gray-800 font-sans">
-      <main className="max-w-7xl mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-10 my-6 sm:my-8">
-        <div className="flex items-center justify-between mb-8 sm:mb-10">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            Welcome back, {user.displayName || user.email?.split('@')[0]}!
-          </h1>
-          <button 
-            onClick={() => setIsCreateModalOpen(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            New Goal
-          </button>
-        </div>
+    <div className="bg-slate-50 flex items-center justify-center px-4 overflow-hidden" style={{height: '85vh', maxHeight: '85vh'}}>
+      <div className="flex w-full max-w-7xl">
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col items-center justify-center">
+          {/* Greeting */}
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-medium mb-6" style={{color: '#546E7A'}}>
+              Welcome back, {user.displayName || user.email?.split('@')[0]}.
+            </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-            <div className="flex items-center gap-3 mb-2">
-              <Target className="w-6 h-6 text-blue-600" />
-              <h3 className="text-lg font-semibold text-blue-800">Active Goals</h3>
-            </div>
-            <p className="text-3xl font-bold text-blue-700">{goals.length}</p>
-            <p className="text-sm text-blue-600">Keep pushing forward!</p>
+            {/* Main Call to Action */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight" style={{color: '#2E7D32'}}>
+              What's one small thing<br />we can do now?
+            </h1>
+
+            {/* Primary Action Button */}
+            <button
+              onClick={handleFocusRoomClick}
+              className="text-white font-semibold py-4 px-8 rounded-lg text-xl transition-colors shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-200 flex items-center gap-3 mx-auto"
+              style={{backgroundColor: '#2E7D32'}}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1B5E20'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2E7D32'}
+            >
+              <Focus className="w-6 h-6" />
+              Enter Focus Room
+            </button>
           </div>
 
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
-            <div className="flex items-center gap-3 mb-2">
-              <CheckCircle2 className="w-6 h-6 text-green-600" />
-              <h3 className="text-lg font-semibold text-green-800">Today's Check-ins</h3>
-            </div>
-            <p className="text-3xl font-bold text-green-700">{todayCheckins}</p>
-            <p className="text-sm text-green-600">Great progress today!</p>
-          </div>
-
-          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100">
-            <div className="flex items-center gap-3 mb-2">
-              <Flame className="w-6 h-6 text-orange-600" />
-              <h3 className="text-lg font-semibold text-orange-800">Best Streak</h3>
-            </div>
-            <p className="text-3xl font-bold text-orange-700">{totalStreak} days</p>
-            <p className="text-sm text-orange-600">Keep the momentum!</p>
+          {/* Secondary Navigation */}
+          <div className="mt-8">
+            <Link
+              href="/goals-overview"
+              className="underline transition-colors text-sm hover:opacity-80"
+              style={{color: '#1565C0'}}
+            >
+              View My Goals
+            </Link>
           </div>
         </div>
 
-        <div className="flex flex-col gap-8 sm:gap-10">
-          <section>
-            <div className="flex items-center gap-2 mb-4 sm:mb-6">
-              <Bookmark className="w-6 h-6 text-blue-600" />
-              <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
-                Your Goals
-              </h2>
-            </div>
-            <TopGoalsSection />
-          </section>
-
-          <section>
-            <div className="flex items-center gap-2 mb-4 sm:mb-6">
-              <Sparkles className="w-6 h-6 text-purple-600" />
-              <h2 className="text-xl sm:text-2xl font-semibold text-gray-700">
-                AI Goal Coach
-              </h2>
-            </div>
-            <GoalCoach userEmail={user.email || ''} />
-          </section>
+        {/* Side Panel */}
+        <div className="hidden lg:block w-80 ml-8">
+          <DailyIndicator
+            onTrophyRoomClick={() => router.push('/trophy-room')}
+            className="sticky top-8"
+          />
         </div>
-      </main>
-      
-      <NewGoalModal 
-        isOpen={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        onGoalCreated={() => {
-          fetchDashboardData(); // Refresh dashboard data
-          setIsCreateModalOpen(false);
-        }}
+      </div>
+
+      {/* First Step Modal */}
+      <FirstStepModal
+        isOpen={showFirstStepModal}
+        onClose={() => setShowFirstStepModal(false)}
+      />
+
+      {/* Achievement Modal */}
+      <AchievementUnlockedModal
+        isOpen={newBadges.length > 0 || showAchievementModal}
+        onClose={() => setShowAchievementModal(false)}
+        onViewTrophyRoom={() => router.push('/trophy-room')}
       />
     </div>
   );

@@ -85,8 +85,6 @@ export default function NewGoalPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-gray-800 font-sans">
-      <AppNavbar />
-      
       <main className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-8 md:p-10 my-8">
         <div className="flex items-center gap-4 mb-8">
           <Link href="/goals">

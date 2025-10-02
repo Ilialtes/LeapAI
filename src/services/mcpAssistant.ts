@@ -31,6 +31,23 @@ interface User {
   email: string;
   age?: number;
   name?: string;
+  displayName?: string;
+  bio?: string;
+  fears?: string[];
+  motivationBlockers?: string[];
+  adhd?: {
+    diagnosed: boolean;
+    notes?: string;
+    copingStrategies?: string[];
+  };
+  personalityTraits?: string[];
+  goals?: string[];
+  preferredWorkingTimes?: string[];
+  energyLevels?: {
+    morning: 'low' | 'medium' | 'high';
+    afternoon: 'low' | 'medium' | 'high';
+    evening: 'low' | 'medium' | 'high';
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -79,7 +96,6 @@ export async function handleUserRequest({ email }: { email: string }) {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
       throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
     }
 
@@ -130,7 +146,7 @@ export async function getUserProfile({ email }: { email: string }) {
   try {
     const userDocRef = db.collection("users").doc(email);
     const userDoc = await userDocRef.get();
-    
+
     if (userDoc.exists) {
       return userDoc.data() as User;
     } else {
@@ -138,5 +154,34 @@ export async function getUserProfile({ email }: { email: string }) {
     }
   } catch (error) {
     return null;
+  }
+}
+
+export async function updateUserProfile({ email, profileData }: {
+  email: string;
+  profileData: Partial<Omit<User, 'id' | 'email' | 'createdAt' | 'updatedAt'>>
+}) {
+  try {
+    const userDocRef = db.collection("users").doc(email);
+    const userDoc = await userDocRef.get();
+
+    if (userDoc.exists) {
+      await userDocRef.update({
+        ...profileData,
+        updatedAt: new Date()
+      });
+    } else {
+      await userDocRef.set({
+        id: email,
+        email,
+        ...profileData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    }
+    return true;
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    return false;
   }
 }

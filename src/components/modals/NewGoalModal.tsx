@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthProvider';
+import { useAchievements } from '@/context/AchievementContext';
 import { Target, Calendar, Tag, FileText, X } from 'lucide-react';
 
 interface NewGoalModalProps {
@@ -12,6 +13,7 @@ interface NewGoalModalProps {
 
 export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoalModalProps) {
   const { user } = useAuth();
+  const { checkForNewAchievements, userData } = useAchievements();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -87,6 +89,11 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
       const result = await response.json();
       
       if (result.success) {
+        // Track achievement for creating a goal
+        checkForNewAchievements({
+          totalGoals: userData.totalGoals + 1
+        });
+
         resetForm();
         onGoalCreated();
         onClose();
@@ -108,8 +115,8 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
       <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div>
-            <h2 className="text-xl font-bold text-gray-800">Create New Goal</h2>
-            <p className="text-sm text-gray-500 mt-1">Set a new goal and start your journey to success</p>
+            <h2 className="text-xl font-bold" style={{color: '#2E7D32'}}>Create New Goal</h2>
+            <p className="text-sm mt-1" style={{color: '#546E7A'}}>Set a new goal and start your journey to success</p>
           </div>
           <button
             onClick={handleClose}
@@ -121,7 +128,7 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <label htmlFor="title" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="title" className="flex items-center gap-2 text-sm font-medium mb-2" style={{color: '#2E7D32'}}>
               <Target className="w-4 h-4" />
               Goal Title *
             </label>
@@ -138,7 +145,7 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
           </div>
 
           <div>
-            <label htmlFor="description" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="description" className="flex items-center gap-2 text-sm font-medium mb-2" style={{color: '#546E7A'}}>
               <FileText className="w-4 h-4" />
               Description (Optional)
             </label>
@@ -155,7 +162,7 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="category" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="category" className="flex items-center gap-2 text-sm font-medium mb-2" style={{color: '#1565C0'}}>
                 <Tag className="w-4 h-4" />
                 Category *
               </label>
@@ -177,7 +184,7 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
             </div>
 
             <div>
-              <label htmlFor="dueDate" className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="dueDate" className="flex items-center gap-2 text-sm font-medium mb-2" style={{color: '#8D6E63'}}>
                 <Calendar className="w-4 h-4" />
                 Due Date *
               </label>
@@ -198,14 +205,22 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
             <button
               type="button"
               onClick={handleClose}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-colors"
+              className="flex-1 bg-gray-100 hover:bg-gray-200 font-semibold py-3 px-6 rounded-lg transition-colors"
+              style={{color: '#546E7A'}}
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="flex-1 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+              style={{backgroundColor: loading ? undefined : '#2E7D32'}}
+              onMouseEnter={(e) => {
+                if (!loading) e.currentTarget.style.backgroundColor = '#1B5E20';
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.currentTarget.style.backgroundColor = '#2E7D32';
+              }}
             >
               {loading ? (
                 <>
