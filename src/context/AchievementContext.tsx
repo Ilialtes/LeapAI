@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { BADGES } from '@/data/badges';
+import { useAuth } from '@/context/AuthProvider';
 
 interface UserData {
   totalFocusSessions: number;
@@ -61,11 +62,24 @@ const DEFAULT_USER_DATA: UserData = {
 };
 
 export function AchievementProvider({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
   const [unlockedBadges, setUnlockedBadges] = useState<UnlockedBadge[]>([]);
   const [newBadges, setNewBadges] = useState<UnlockedBadge[]>([]);
   const [userData, setUserData] = useState<UserData>(DEFAULT_USER_DATA);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch achievements from database when user logs in
   useEffect(() => {
+    if (user?.email) {
+      fetchAchievements();
+    } else {
+      // Fallback to localStorage when not logged in
+      loadFromLocalStorage();
+      setIsLoading(false);
+    }
+  }, [user?.email]);
+
+  const loadFromLocalStorage = () => {
     const savedBadges = localStorage.getItem('leap-ai-unlocked-badges');
     const savedUserData = localStorage.getItem('leap-ai-user-data');
 
@@ -84,14 +98,64 @@ export function AchievementProvider({ children }: { children: ReactNode }) {
         console.error('Error parsing saved user data:', error);
       }
     }
-  }, []);
+  };
+
+  const fetchAchievements = async () => {
+    if (!user?.email) return;
+
+    try {
+      const response = await fetch(`/api/achievements?userEmail=${encodeURIComponent(user.email)}`);
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setUnlockedBadges(result.data.unlockedBadges || []);
+        setUserData(result.data.userData || DEFAULT_USER_DATA);
+
+        // Sync to localStorage as backup
+        localStorage.setItem('leap-ai-unlocked-badges', JSON.stringify(result.data.unlockedBadges || []));
+        localStorage.setItem('leap-ai-user-data', JSON.stringify(result.data.userData || DEFAULT_USER_DATA));
+      }
+    } catch (error) {
+      console.error('Error fetching achievements:', error);
+      // Fallback to localStorage on error
+      loadFromLocalStorage();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const syncToDatabase = async (badges: UnlockedBadge[], data: UserData) => {
+    if (!user?.email) return;
+
+    try {
+      await fetch('/api/achievements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userEmail: user.email,
+          unlockedBadges: badges,
+          userData: data
+        })
+      });
+    } catch (error) {
+      console.error('Error syncing achievements to database:', error);
+    }
+  };
 
   const saveBadges = (badges: UnlockedBadge[]) => {
     localStorage.setItem('leap-ai-unlocked-badges', JSON.stringify(badges));
+    // Sync to database if user is logged in
+    if (user?.email) {
+      syncToDatabase(badges, userData);
+    }
   };
 
   const saveUserData = (data: UserData) => {
     localStorage.setItem('leap-ai-user-data', JSON.stringify(data));
+    // Sync to database if user is logged in
+    if (user?.email) {
+      syncToDatabase(unlockedBadges, data);
+    }
   };
 
   const getBadgeById = (id: string) => {
