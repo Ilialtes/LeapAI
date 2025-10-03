@@ -4,12 +4,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthProvider';
 import { useAchievements } from '@/context/AchievementContext';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Volume2, VolumeX, Cloud, Waves, Play, Pause, Settings, Lightbulb, Target } from 'lucide-react';
+import { Cloud, Waves, Play, Pause, Lightbulb, Target, VolumeX } from 'lucide-react';
 import Link from 'next/link';
 
 export default function FocusRoomPage() {
   const { user } = useAuth();
-  const { checkForNewAchievements, userData, updateUserData } = useAchievements();
+  const { checkForNewAchievements, userData } = useAchievements();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -19,7 +19,6 @@ export default function FocusRoomPage() {
   const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
 
   // Task state - can be edited inline
   const [task, setTask] = useState(
