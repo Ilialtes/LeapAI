@@ -32,8 +32,8 @@ interface AchievementContextType {
   checkForNewAchievements: (newUserData: Partial<UserData>) => void;
   markBadgesAsViewed: (badgeIds: string[]) => void;
   updateUserData: (data: Partial<UserData>) => void;
-  getBadgeById: (id: string) => any;
-  getUnlockedBadgesByCategory: (category: string) => any[];
+  getBadgeById: (id: string) => typeof BADGES[number] | undefined;
+  getUnlockedBadgesByCategory: (category: string) => typeof BADGES[number][];
   getTotalBadgesByRarity: (rarity: string) => number;
   getUserProgress: () => {
     totalBadges: number;

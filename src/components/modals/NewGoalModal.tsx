@@ -148,7 +148,7 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated, initialDa
             <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
               <p className="text-sm text-green-800 flex items-center gap-2">
                 <span>✨</span>
-                We've filled in some details based on your conversation. Feel free to adjust anything!
+                We&apos;ve filled in some details based on your conversation. Feel free to adjust anything!
               </p>
             </div>
           )}

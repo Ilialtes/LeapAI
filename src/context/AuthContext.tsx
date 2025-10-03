@@ -2,10 +2,16 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+// Define the shape of your user
+interface User {
+  name: string;
+  [key: string]: unknown;
+}
+
 // Define the shape of your authentication context
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: any; // Replace 'any' with your user type
+  user: User | null;
   login: () => void;
   logout: () => void;
 }
@@ -20,7 +26,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<any>(null); // Replace 'any' with your user type
+  const [user, setUser] = useState<User | null>(null);
 
   const login = () => {
     // Implement your login logic here

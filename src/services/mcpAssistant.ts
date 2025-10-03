@@ -137,7 +137,7 @@ export async function updateUserAge({ email, age }: { email: string; age: number
       });
     }
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -152,7 +152,7 @@ export async function getUserProfile({ email }: { email: string }) {
     } else {
       return null;
     }
-  } catch (error) {
+  } catch {
     return null;
   }
 }

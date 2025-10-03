@@ -6,7 +6,11 @@ export async function getGoal(goalId: string) {
   return Promise.resolve({ id: goalId, name: "Placeholder Goal" });
 }
 
-export async function createGoal(goalData: any) {
+interface GoalData {
+  [key: string]: unknown;
+}
+
+export async function createGoal(goalData: GoalData) {
   console.log("Creating goal:", goalData);
   return Promise.resolve({ id: "newGoalId", ...goalData });
 }
