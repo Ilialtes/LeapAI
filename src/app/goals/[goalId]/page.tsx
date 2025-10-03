@@ -3,8 +3,9 @@
 
 import React, { useState, useEffect } from 'react';
 import ProgressBar from '@/components/ui/ProgressBar';
+import OnRampMenu from '@/components/OnRampMenu';
 import { useAuth } from '@/context/AuthProvider';
-import { FilePenLine, CheckSquare2, Square, PlusCircle, CheckCheck, Code, UsersRound, ArrowLeft, X } from 'lucide-react';
+import { FilePenLine, CheckSquare2, Square, PlusCircle, CheckCheck, Code, UsersRound, ArrowLeft, X, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 interface GoalDetailPageProps {
@@ -46,8 +47,9 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
   const [milestoneText, setMilestoneText] = useState('');
   const [isEditingProgress, setIsEditingProgress] = useState(false);
   const [newProgress, setNewProgress] = useState(0);
+  const [showOnRamps, setShowOnRamps] = useState(false);
   const { user } = useAuth();
-  
+
   // Unwrap the params Promise
   const { goalId } = React.use(params);
 
@@ -293,14 +295,30 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
                   <p className="text-sm text-gray-600 mt-2">{goal.description}</p>
                 )}
               </div>
-              <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 mt-4 sm:mt-0 whitespace-nowrap">
-                <FilePenLine className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Edit Goal</span>
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowOnRamps(!showOnRamps)}
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 mt-4 sm:mt-0 whitespace-nowrap"
+                >
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+                  {showOnRamps ? 'Hide' : 'Get Started'}
+                </button>
+                <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 mt-4 sm:mt-0 whitespace-nowrap">
+                  <FilePenLine className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span>Edit Goal</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        
+
+        {/* On-Ramp Menu Section */}
+        {showOnRamps && (
+          <section className="mt-8 mb-8">
+            <OnRampMenu goal={goal.title} />
+          </section>
+        )}
+
         <section className="mt-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-base font-semibold text-gray-700">Overall Progress</span>

@@ -9,16 +9,21 @@ interface NewGoalModalProps {
   isOpen: boolean;
   onClose: () => void;
   onGoalCreated: () => void;
+  initialData?: {
+    title: string;
+    description: string;
+    category: string;
+  } | null;
 }
 
-export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoalModalProps) {
+export default function NewGoalModal({ isOpen, onClose, onGoalCreated, initialData }: NewGoalModalProps) {
   const { user } = useAuth();
   const { checkForNewAchievements, userData } = useAchievements();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category: '',
+    title: initialData?.title || '',
+    description: initialData?.description || '',
+    category: initialData?.category || '',
     dueDate: ''
   });
 
@@ -32,6 +37,18 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
     'Financial',
     'Creative'
   ];
+
+  // Update form data when initialData changes
+  React.useEffect(() => {
+    if (initialData) {
+      setFormData({
+        title: initialData.title,
+        description: initialData.description,
+        category: initialData.category,
+        dueDate: ''
+      });
+    }
+  }, [initialData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -127,6 +144,15 @@ export default function NewGoalModal({ isOpen, onClose, onGoalCreated }: NewGoal
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {initialData && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
+              <p className="text-sm text-green-800 flex items-center gap-2">
+                <span>✨</span>
+                We've filled in some details based on your conversation. Feel free to adjust anything!
+              </p>
+            </div>
+          )}
+
           <div>
             <label htmlFor="title" className="flex items-center gap-2 text-sm font-medium mb-2" style={{color: '#2E7D32'}}>
               <Target className="w-4 h-4" />

@@ -194,7 +194,7 @@ export default function ProfilePage() {
                   type="text"
                   value={profile.name || ''}
                   onChange={(e) => setProfile(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                   placeholder="Your full name"
                 />
               </div>
@@ -204,7 +204,7 @@ export default function ProfilePage() {
                   type="text"
                   value={profile.displayName || ''}
                   onChange={(e) => setProfile(prev => ({ ...prev, displayName: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                   placeholder="How you'd like to be addressed"
                 />
               </div>
@@ -214,7 +214,7 @@ export default function ProfilePage() {
                   type="number"
                   value={profile.age || ''}
                   onChange={(e) => setProfile(prev => ({ ...prev, age: parseInt(e.target.value) || undefined }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                   placeholder="Your age"
                   min="1"
                   max="120"
@@ -226,7 +226,7 @@ export default function ProfilePage() {
               <textarea
                 value={profile.bio || ''}
                 onChange={(e) => setProfile(prev => ({ ...prev, bio: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                 rows={3}
                 placeholder="Tell us about yourself..."
               />
@@ -253,7 +253,7 @@ export default function ProfilePage() {
                     type="text"
                     value={newFear}
                     onChange={(e) => setNewFear(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                     placeholder="Add a fear..."
                     onKeyPress={(e) => e.key === 'Enter' && addArrayItem('fears', newFear, setNewFear)}
                   />
@@ -283,7 +283,7 @@ export default function ProfilePage() {
                     type="text"
                     value={newBlocker}
                     onChange={(e) => setNewBlocker(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                     placeholder="Add something that demotivates you..."
                     onKeyPress={(e) => e.key === 'Enter' && addArrayItem('motivationBlockers', newBlocker, setNewBlocker)}
                   />
@@ -337,7 +337,7 @@ export default function ProfilePage() {
                     ...prev,
                     adhd: { ...prev.adhd!, notes: e.target.value }
                   }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                   rows={3}
                   placeholder="Any specific ADHD-related challenges or notes..."
                 />
@@ -350,7 +350,7 @@ export default function ProfilePage() {
                     type="text"
                     value={newCopingStrategy}
                     onChange={(e) => setNewCopingStrategy(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                     placeholder="Add a coping strategy..."
                     onKeyPress={(e) => e.key === 'Enter' && addCopingStrategy()}
                   />
@@ -387,7 +387,7 @@ export default function ProfilePage() {
                     type="text"
                     value={newTrait}
                     onChange={(e) => setNewTrait(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                     placeholder="Add a personality trait..."
                     onKeyPress={(e) => e.key === 'Enter' && addArrayItem('personalityTraits', newTrait, setNewTrait)}
                   />
@@ -417,7 +417,7 @@ export default function ProfilePage() {
                     type="text"
                     value={newWorkingTime}
                     onChange={(e) => setNewWorkingTime(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                     placeholder="e.g., Early morning, Late evening..."
                     onKeyPress={(e) => e.key === 'Enter' && addArrayItem('preferredWorkingTimes', newWorkingTime, setNewWorkingTime)}
                   />
@@ -455,7 +455,7 @@ export default function ProfilePage() {
                             [time]: e.target.value as 'low' | 'medium' | 'high'
                           }
                         }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white"
                       >
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>

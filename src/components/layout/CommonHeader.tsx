@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Home, User, Settings, LogOut, Target, Award } from 'lucide-react';
@@ -12,12 +12,25 @@ const CommonHeader: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { user } = useAuth();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const navItems = [
     { href: '/dashboard', label: 'Focus', icon: Home },
-    { href: '/goals-overview', label: 'Goals', icon: Target },
+    { href: '/goals', label: 'Goals', icon: Target },
     { href: '/trophy-room', label: 'Trophies', icon: Award },
-    { href: '/profile', label: 'Profile', icon: User },
   ];
 
   const isActive = (href: string) => {
@@ -108,22 +121,40 @@ const CommonHeader: React.FC = () => {
           {/* User Actions - Right */}
           <div className="flex items-center space-x-2">
             {user ? (
-              <>
-                <Link
-                  href="/profile"
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                  title="Settings"
+                  title="Settings & Profile"
                 >
                   <Settings className="w-5 h-5" />
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                  title="Sign Out"
-                >
-                  <LogOut className="w-5 h-5" />
                 </button>
-              </>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                    <Link
+                      href="/profile"
+                      className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      <User className="w-4 h-4" />
+                      <span>Profile</span>
+                    </Link>
+                    <div className="border-t border-gray-100"></div>
+                    <button
+                      onClick={() => {
+                        setIsDropdownOpen(false);
+                        handleLogout();
+                      }}
+                      className="flex items-center space-x-2 w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="flex items-center space-x-2">
                 <Link

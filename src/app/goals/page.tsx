@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ProgressBar from '@/components/ui/ProgressBar';
 import NewGoalModal from '@/components/modals/NewGoalModal';
+import GoalSparkCoach from '@/components/GoalSparkCoach';
 import { useAuth } from '@/context/AuthProvider';
-import { PlusCircle, Calendar, Target, X } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { PlusCircle, Calendar, Target, X, Lightbulb, Play, Edit } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface Goal {
   id: string;
@@ -16,20 +19,21 @@ interface Goal {
   status?: 'active' | 'warning' | 'expired' | 'completed';
 }
 
-const getGoalStatus = (dueDate: string, progress: number): 'active' | 'warning' | 'expired' | 'completed' => {
+const getGoalStatus = (dueDate: string, progress: number): 'active' | 'warning' | 'in-progress' | 'completed' => {
   if (progress >= 100) return 'completed';
-  
+
   const today = new Date();
   const goalDueDate = new Date(dueDate);
-  
-  if (goalDueDate < today) return 'expired';
-  
+
+  // Changed: expired goals are now "in-progress" (neutral, shame-free)
+  if (goalDueDate < today) return 'in-progress';
+
   // Check if goal is expiring within 7 days
   const diffTime = goalDueDate.getTime() - today.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
+
   if (diffDays <= 3 && diffDays > 0) return 'warning';
-  
+
   return 'active';
 };
 
@@ -38,6 +42,33 @@ export default function GoalsPage() {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [showGoalSpark, setShowGoalSpark] = useState(false);
+  const [prefilledGoalData, setPrefilledGoalData] = useState<{
+    title: string;
+    description: string;
+    category: string;
+  } | null>(null);
+
+  // Check if spark mode is enabled via URL parameter
+  useEffect(() => {
+    if (searchParams.get('spark') === 'true') {
+      setShowGoalSpark(true);
+    }
+
+    // Check if user wants to save a task as a goal
+    const savedTask = searchParams.get('saveTask');
+    if (savedTask) {
+      const decodedTask = decodeURIComponent(savedTask);
+      setPrefilledGoalData({
+        title: decodedTask,
+        description: 'A small step towards my goals',
+        category: 'Personal'
+      });
+      setIsModalOpen(true);
+    }
+  }, [searchParams]);
 
   const fetchGoals = async () => {
     console.log('fetchGoals called, user email:', user?.email);
@@ -79,6 +110,17 @@ export default function GoalsPage() {
 
   const handleGoalCreated = () => {
     fetchGoals();
+    setShowGoalSpark(false);
+  };
+
+  const handleGoalSparkSelection = (goalData: {
+    title: string;
+    description: string;
+    category: string;
+  }) => {
+    setPrefilledGoalData(goalData);
+    setShowGoalSpark(false);
+    setIsModalOpen(true);
   };
 
   const seedSampleGoals = async () => {
@@ -160,52 +202,77 @@ export default function GoalsPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              My Goals
+              {showGoalSpark ? 'Goal Workshop' : 'My Goals'}
             </h1>
             <p className="text-sm sm:text-base text-gray-500 mt-1">
-              Track your progress and achieve your dreams
+              {showGoalSpark ? 'Let\'s find a goal that feels right for you' : 'Track your progress and achieve your dreams'}
             </p>
           </div>
           <div className="flex gap-2 mt-4 sm:mt-0">
-            {process.env.NODE_ENV === 'development' && (
-              <button 
-                onClick={seedSampleGoals}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
+            {showGoalSpark && (
+              <button
+                onClick={() => setShowGoalSpark(false)}
+                className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg shadow-sm whitespace-nowrap"
               >
-                <span>🌱</span>
-                <span>Seed Goals</span>
+                Back to Goals
               </button>
             )}
-            <button 
-              onClick={() => setIsModalOpen(true)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
-            >
-              <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>New Goal</span>
-            </button>
+            {!showGoalSpark && (
+              <>
+                <button
+                  onClick={() => setShowGoalSpark(true)}
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
+                  title="Feeling stuck? Let's find a goal"
+                >
+                  <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span>Need Help?</span>
+                </button>
+                {process.env.NODE_ENV === 'development' && (
+                  <button
+                    onClick={seedSampleGoals}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
+                  >
+                    <span>🌱</span>
+                    <span>Seed Goals</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
+                >
+                  <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span>New Goal</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
 
-        {loading ? (
+        {/* Goal Spark Coach - Shows when spark=true */}
+        {showGoalSpark && (
+          <GoalSparkCoach onGoalSelected={handleGoalSparkSelection} />
+        )}
+
+        {!showGoalSpark && loading ? (
           <div className="flex justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
           </div>
-        ) : (
+        ) : !showGoalSpark ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {goals.map((goal) => {
             const status = getGoalStatus(goal.dueDate, goal.progress);
-            const isExpired = status === 'expired';
+            const isInProgress = status === 'in-progress';
             const isWarning = status === 'warning';
             const isCompleted = status === 'completed';
-            
+
             return (
-              <Link key={goal.id} href={`/goals/${goal.id}`}>
-                <div className={`border rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer ${
-                  isExpired ? 'border-red-500 bg-red-50' : 
-                  isWarning ? 'border-yellow-500 bg-yellow-50' :
-                  isCompleted ? 'border-green-500 bg-green-50' : 
-                  'border-blue-500 bg-blue-50'
-                }`}>
+              <div key={goal.id} className={`border rounded-lg p-6 hover:shadow-md transition-shadow ${
+                isInProgress ? 'border-gray-300 bg-gray-50' :
+                isWarning ? 'border-yellow-500 bg-yellow-50' :
+                isCompleted ? 'border-green-500 bg-green-50' :
+                'border-blue-500 bg-blue-50'
+              }`}>
+                <Link href={`/goals/${goal.id}`} className="block">
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <h3 className="text-lg font-semibold mb-1 text-gray-800">
@@ -216,12 +283,12 @@ export default function GoalsPage() {
                           {goal.category}
                         </span>
                         <span className={`inline-block text-xs font-medium px-2 py-1 rounded ${
-                          isExpired ? 'bg-red-100 text-red-800' :
+                          isInProgress ? 'bg-gray-100 text-gray-600' :
                           isWarning ? 'bg-yellow-100 text-yellow-800' :
                           isCompleted ? 'bg-green-100 text-green-800' :
                           'bg-blue-100 text-blue-800'
                         }`}>
-                          {isExpired ? 'Expired' : isWarning ? 'Due Soon' : isCompleted ? 'Completed' : 'Active'}
+                          {isInProgress ? 'In Progress' : isWarning ? 'Due Soon' : isCompleted ? 'Completed' : 'Active'}
                         </span>
                       </div>
                     </div>
@@ -249,25 +316,53 @@ export default function GoalsPage() {
                     />
                   </div>
 
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-gray-500 mb-4">
                     <Calendar className="w-4 h-4 mr-2" />
                     <span>Due: {goal.dueDate}</span>
-                    {isExpired && <span className="ml-2 font-medium text-red-600">(Overdue)</span>}
                     {isWarning && <span className="ml-2 font-medium text-yellow-600">(Due Soon)</span>}
                   </div>
+                </Link>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 pt-3 border-t border-gray-200">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      // Let Focus Room extract time from task text
+                      router.push(`/focus-room?task=${encodeURIComponent(goal.title)}`);
+                    }}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-2 px-3 rounded-lg transition-colors flex items-center justify-center gap-1.5"
+                    title="Start working on this goal"
+                  >
+                    <Play className="w-4 h-4" />
+                    <span>Start</span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      router.push(`/goals/${goal.id}`);
+                    }}
+                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium py-2 px-3 rounded-lg transition-colors flex items-center justify-center gap-1.5"
+                    title="View and edit goal details"
+                  >
+                    <Edit className="w-4 h-4" />
+                    <span>Details</span>
+                  </button>
                 </div>
-              </Link>
+              </div>
             );
             })}
           </div>
-        )}
+        ) : null}
 
-        {!loading && goals.length === 0 && (
+        {!showGoalSpark && !loading && goals.length === 0 && (
           <div className="text-center py-12">
             <Target className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-600 mb-2">No goals yet</h3>
             <p className="text-gray-500 mb-6">Start your journey by creating your first goal</p>
-            <button 
+            <button
               onClick={() => setIsModalOpen(true)}
               className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 mx-auto"
             >
@@ -277,10 +372,14 @@ export default function GoalsPage() {
           </div>
         )}
 
-        <NewGoalModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)}
+        <NewGoalModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setPrefilledGoalData(null);
+          }}
           onGoalCreated={handleGoalCreated}
+          initialData={prefilledGoalData}
         />
       </main>
     </div>
