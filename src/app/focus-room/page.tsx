@@ -446,7 +446,24 @@ export default function FocusRoomPage() {
   const finishSession = () => {
     setIsRunning(false);
     setActiveSound('mute');
-    router.push('/dashboard');
+
+    // Check if we came from a goal detail page
+    const goalId = searchParams.get('goalId');
+    const taskCompleted = task || searchParams.get('task') || '';
+
+    if (goalId && sessionType === 'flow') {
+      // Redirect back to goal with completion parameters for automatic check-in
+      const sessionDuration = getSessionDuration('flow');
+      const params = new URLSearchParams({
+        sessionComplete: 'true',
+        task: taskCompleted,
+        duration: sessionDuration.toString()
+      });
+      router.push(`/goals/${goalId}?${params.toString()}`);
+    } else {
+      // Default redirect to dashboard
+      router.push('/dashboard');
+    }
   };
 
   const handleExit = () => {

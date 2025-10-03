@@ -217,41 +217,38 @@ export default function GoalsPage() {
             const isCompleted = status === 'completed';
 
             return (
-              <div key={goal.id} className={`border rounded-lg p-6 hover:shadow-md transition-shadow ${
+              <div key={goal.id} className={`relative border rounded-lg p-6 hover:shadow-md transition-shadow ${
                 isInProgress ? 'border-gray-300 bg-gray-50' :
                 isWarning ? 'border-yellow-500 bg-yellow-50' :
                 isCompleted ? 'border-green-500 bg-green-50' :
                 'border-blue-500 bg-blue-50'
               }`}>
+                {/* Delete Button - Absolute positioned in top-right corner */}
+                <button
+                  onClick={(e) => deleteGoal(goal.id, e)}
+                  className="absolute top-3 right-3 p-1.5 hover:bg-red-100 rounded-full transition-colors group z-10"
+                  title="Delete goal"
+                >
+                  <X className="w-4 h-4 text-gray-400 group-hover:text-red-600" />
+                </button>
+
                 <Link href={`/goals/${goal.id}`} className="block">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1 text-gray-800">
-                        {goal.title}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded">
-                          {goal.category}
-                        </span>
-                        <span className={`inline-block text-xs font-medium px-2 py-1 rounded ${
-                          isInProgress ? 'bg-gray-100 text-gray-600' :
-                          isWarning ? 'bg-yellow-100 text-yellow-800' :
-                          isCompleted ? 'bg-green-100 text-green-800' :
-                          'bg-blue-100 text-blue-800'
-                        }`}>
-                          {isInProgress ? 'In Progress' : isWarning ? 'Due Soon' : isCompleted ? 'Completed' : 'Active'}
-                        </span>
-                      </div>
-                    </div>
+                  <div className="mb-4 pr-8">
+                    <h3 className="text-lg font-semibold mb-1 text-gray-800">
+                      {goal.title}
+                    </h3>
                     <div className="flex items-center gap-2">
-                      <Target className="w-5 h-5 text-gray-400" />
-                      <button
-                        onClick={(e) => deleteGoal(goal.id, e)}
-                        className="p-1 hover:bg-red-100 rounded-full transition-colors group"
-                        title="Delete goal"
-                      >
-                        <X className="w-4 h-4 text-gray-400 group-hover:text-red-600" />
-                      </button>
+                      <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded">
+                        {goal.category}
+                      </span>
+                      <span className={`inline-block text-xs font-medium px-2 py-1 rounded ${
+                        isInProgress ? 'bg-gray-100 text-gray-600' :
+                        isWarning ? 'bg-yellow-100 text-yellow-800' :
+                        isCompleted ? 'bg-green-100 text-green-800' :
+                        'bg-blue-100 text-blue-800'
+                      }`}>
+                        {isInProgress ? 'In Progress' : isWarning ? 'Due Soon' : isCompleted ? 'Completed' : 'Active'}
+                      </span>
                     </div>
                   </div>
 
