@@ -123,46 +123,6 @@ export default function GoalsPage() {
     setIsModalOpen(true);
   };
 
-  const seedSampleGoals = async () => {
-    console.log('Seed button clicked, user email:', user?.email);
-    
-    if (!user?.email) {
-      console.error('No user email found!');
-      return;
-    }
-    
-    try {
-      console.log('Making seed request...');
-      const response = await fetch('/api/goals/seed', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userEmail: user.email
-        }),
-      });
-
-      console.log('Response status:', response.status);
-      
-      if (response.ok) {
-        const result = await response.json();
-        console.log('Response data:', result);
-        
-        if (result.success) {
-          fetchGoals(); // Refresh goals list
-          console.log('Sample goals added successfully!');
-        } else {
-          console.error('Failed to add sample goals:', result.error || 'Unknown error');
-        }
-      } else {
-        const errorText = await response.text();
-        console.error('Response error:', errorText);
-      }
-    } catch (error) {
-      console.error('Error seeding goals:', error);
-    }
-  };
 
   const deleteGoal = async (goalId: string, e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation to goal detail
@@ -227,15 +187,6 @@ export default function GoalsPage() {
                   <Lightbulb className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>Need Help?</span>
                 </button>
-                {process.env.NODE_ENV === 'development' && (
-                  <button
-                    onClick={seedSampleGoals}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
-                  >
-                    <span>🌱</span>
-                    <span>Seed Goals</span>
-                  </button>
-                )}
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
