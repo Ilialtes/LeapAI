@@ -77,7 +77,7 @@ export default function DailyIndicator({ onTrophyRoomClick, className = '' }: Da
 
         <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
           <div
-            className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-500"
             style={{width: `${totalBadges > 0 ? (unlockedCount / totalBadges) * 100 : 0}%`}}
           />
         </div>
@@ -93,8 +93,8 @@ export default function DailyIndicator({ onTrophyRoomClick, className = '' }: Da
             <div className="text-sm font-bold text-blue-700">{rarityStats.rare}</div>
           </div>
           <div className="bg-purple-50 rounded p-2">
-            <div className="text-xs font-medium text-purple-600 mb-1">Epic</div>
-            <div className="text-sm font-bold text-purple-700">{rarityStats.epic}</div>
+            <div className="text-xs font-medium text-green-600 mb-1">Epic</div>
+            <div className="text-sm font-bold text-green-700">{rarityStats.epic}</div>
           </div>
           <div className="bg-yellow-50 rounded p-2">
             <div className="text-xs font-medium text-yellow-600 mb-1">Legend</div>

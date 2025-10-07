@@ -86,7 +86,7 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -97,7 +97,7 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Goal Not Found</h1>
           <p className="text-gray-600 mb-6">The goal you&apos;re looking for doesn&apos;t exist or you don&apos;t have access to it.</p>
-          <Link href="/goals" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg">
+          <Link href="/goals" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">
             Back to Goals
           </Link>
         </div>
@@ -123,7 +123,7 @@ export default function GoalDetailPage({ params }: GoalDetailPageProps) {
               <p className="text-sm text-gray-500">
                 Due: {new Date(goal.dueDate).toLocaleDateString()}
               </p>
-              <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded">
+              <span className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
                 {goal.category}
               </span>
             </div>

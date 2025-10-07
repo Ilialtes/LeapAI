@@ -79,7 +79,7 @@ export default function GoalsOverviewPage() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Please sign in to view your goals</h1>
-          <Link href="/auth/signin" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg">
+          <Link href="/auth/signin" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">
             Sign In
           </Link>
         </div>
@@ -117,7 +117,7 @@ export default function GoalsOverviewPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-50 rounded-xl p-6 border border-blue-100">
             <div className="flex items-center gap-3 mb-2">
               <Target className="w-6 h-6 text-blue-600" />
               <h3 className="text-lg font-semibold" style={{color: '#1565C0'}}>Active Goals</h3>
@@ -158,7 +158,7 @@ export default function GoalsOverviewPage() {
 
           <section>
             <div className="flex items-center gap-2 mb-4 sm:mb-6">
-              <Sparkles className="w-6 h-6 text-purple-600" />
+              <Sparkles className="w-6 h-6 text-green-600" />
               <h2 className="text-xl sm:text-2xl font-semibold" style={{color: '#7B1FA2'}}>
                 AI Goal Coach
               </h2>

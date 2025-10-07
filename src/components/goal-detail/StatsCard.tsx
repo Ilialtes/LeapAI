@@ -45,7 +45,7 @@ export default function StatsCard({ stats }: StatsCardProps) {
   return (
     <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 mb-8">
       <h3 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-        <TrendingUp className="w-5 h-5 text-indigo-600" />
+        <TrendingUp className="w-5 h-5 text-blue-600" />
         Your Progress
       </h3>
 
@@ -85,7 +85,7 @@ export default function StatsCard({ stats }: StatsCardProps) {
 
         {/* Days Until Due */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-3">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full mb-3">
             <span className="text-2xl">📅</span>
           </div>
           <div className="text-3xl font-bold text-gray-800">
@@ -102,11 +102,11 @@ export default function StatsCard({ stats }: StatsCardProps) {
         <div className="mt-6 pt-6 border-t border-gray-200">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-gray-600">Overall Progress</span>
-            <span className="text-sm font-bold text-indigo-600">{progress}%</span>
+            <span className="text-sm font-bold text-blue-600">{progress}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
-              className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>

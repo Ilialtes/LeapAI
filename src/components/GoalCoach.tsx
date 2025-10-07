@@ -139,8 +139,8 @@ export default function GoalCoach({ userEmail }: GoalCoachProps) {
       case 'motivation': return <TrendingUp className="w-5 h-5 text-green-600" />;
       case 'strategy': return <Target className="w-5 h-5 text-blue-600" />;
       case 'tips': return <Lightbulb className="w-5 h-5 text-yellow-600" />;
-      case 'reflection': return <MessageCircle className="w-5 h-5 text-purple-600" />;
-      default: return <Sparkles className="w-5 h-5 text-indigo-600" />;
+      case 'reflection': return <MessageCircle className="w-5 h-5 text-green-600" />;
+      default: return <Sparkles className="w-5 h-5 text-blue-600" />;
     }
   };
 
@@ -150,12 +150,12 @@ export default function GoalCoach({ userEmail }: GoalCoachProps) {
       case 'strategy': return 'border-blue-200 bg-blue-50';
       case 'tips': return 'border-yellow-200 bg-yellow-50';
       case 'reflection': return 'border-purple-200 bg-purple-50';
-      default: return 'border-indigo-200 bg-indigo-50';
+      default: return 'border-blue-200 bg-blue-50';
     }
   };
 
   return (
-    <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl p-6 border border-violet-100">
+    <div className="bg-gradient-to-br from-violet-50 to-green-50 rounded-xl p-6 border border-violet-100">
       <div className="flex flex-col gap-4">
         {/* Conversation History */}
         {conversation.length > 0 && (
@@ -164,7 +164,7 @@ export default function GoalCoach({ userEmail }: GoalCoachProps) {
               <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[80%] rounded-lg ${
                   message.role === 'user' 
-                    ? 'bg-indigo-600 text-white p-3' 
+                    ? 'bg-blue-600 text-white p-3' 
                     : 'bg-gray-100 text-gray-800'
                 }`}>
                   {message.role === 'user' ? (
@@ -213,13 +213,13 @@ export default function GoalCoach({ userEmail }: GoalCoachProps) {
               onChange={(e) => setUserInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleAskCoach()}
               placeholder="Ask your AI coach anything about your goals..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               disabled={loading}
             />
             <button
               onClick={handleAskCoach}
               disabled={loading || !userInput.trim()}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center gap-2"
             >
               {loading ? <Loader className="w-4 h-4 animate-spin" /> : <MessageCircle className="w-4 h-4" />}
               Ask
@@ -253,7 +253,7 @@ export default function GoalCoach({ userEmail }: GoalCoachProps) {
 
         {!coaching && !loading && (
           <div className="text-center py-8">
-            <Sparkles className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+            <Sparkles className="w-12 h-12 text-green-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-700 mb-2">Your AI Goal Coach</h3>
             <p className="text-gray-600 mb-4">
               Get personalized coaching, motivation, and strategies to achieve your goals.

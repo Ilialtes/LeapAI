@@ -61,7 +61,7 @@ export default function FirstStepModal({ isOpen, onClose }: FirstStepModalProps)
               value={bigPicture}
               onChange={(e) => setBigPicture(e.target.value)}
               placeholder="e.g., Launch my side project, Get healthier, Learn a new skill..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-gray-700 placeholder-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-700 placeholder-gray-400"
             />
             <p className="text-xs text-gray-500 mt-1">Optional - This helps us understand your bigger goal</p>
           </div>
@@ -77,7 +77,7 @@ export default function FirstStepModal({ isOpen, onClose }: FirstStepModalProps)
               value={firstStep}
               onChange={(e) => setFirstStep(e.target.value)}
               placeholder="e.g., Open my laptop, Write one paragraph, Do 5 pushups..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors text-gray-700 placeholder-gray-400"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-700 placeholder-gray-400"
               required
             />
             <p className="text-xs text-gray-500 mt-1">Make it so small it feels almost silly not to do it</p>

@@ -56,7 +56,7 @@ const CommonHeader: React.FC = () => {
           {/* Logo - Left */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-green-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">LA</span>
               </div>
               <span className="text-xl font-bold" style={{color: '#2E7D32'}}>Leap AI</span>
@@ -133,8 +133,11 @@ const CommonHeader: React.FC = () => {
                 {/* Dropdown Menu */}
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-xs text-gray-500">Settings</p>
+                    </div>
                     <Link
-                      href="/profile"
+                      href="/settings?tab=profile"
                       className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
                       onClick={() => setIsDropdownOpen(false)}
                     >

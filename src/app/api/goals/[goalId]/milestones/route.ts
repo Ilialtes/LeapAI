@@ -31,10 +31,10 @@ interface MilestoneProps {
 export async function POST(request: NextRequest, { params }: MilestoneProps) {
   try {
     const { goalId } = await params;
-    const { text, userEmail } = await request.json();
-    
-    console.log('Adding milestone to goal:', goalId);
-    
+    const { text, userEmail, duration } = await request.json();
+
+    console.log('Adding milestone to goal:', goalId, 'with duration:', duration);
+
     if (!text || !userEmail) {
       return NextResponse.json(
         { error: 'Text and user email are required' },
@@ -112,7 +112,15 @@ export async function POST(request: NextRequest, { params }: MilestoneProps) {
       lastCheckinDate = todayStr;
     }
 
-    // Update the goal with new milestone, check-in, and streak info
+    // Extract duration from check-in text if provided
+    const focusDuration = duration || 0; // Duration in minutes
+    const isFocusSession = text.includes('Focused for');
+
+    // Update stats if this is a focus session
+    const totalFocusTime = (goalData.totalFocusTime || 0) + (isFocusSession ? focusDuration : 0);
+    const sessionsCompleted = (goalData.sessionsCompleted || 0) + (isFocusSession ? 1 : 0);
+
+    // Update the goal with new milestone, check-in, streak info, and session stats
     await db.collection("goals").doc(goalId).update({
       milestones: [...currentMilestones, newMilestone],
       checkinHistory: [...currentCheckins, newCheckin],
@@ -120,16 +128,20 @@ export async function POST(request: NextRequest, { params }: MilestoneProps) {
       lastCheckinDate: lastCheckinDate,
       lastActivityDate: new Date(),
       activityCount: (goalData.activityCount || 0) + 1,
+      totalFocusTime: totalFocusTime,
+      sessionsCompleted: sessionsCompleted,
       updatedAt: new Date()
     });
 
-    console.log('Milestone and check-in added successfully. Current streak:', streak);
+    console.log('Milestone and check-in added successfully. Streak:', streak, 'Sessions:', sessionsCompleted, 'Total time:', totalFocusTime);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       milestone: newMilestone,
       checkin: newCheckin,
       streak: streak,
-      success: true 
+      totalFocusTime: totalFocusTime,
+      sessionsCompleted: sessionsCompleted,
+      success: true
     });
     
   } catch (error) {

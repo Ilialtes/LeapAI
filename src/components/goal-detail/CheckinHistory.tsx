@@ -69,7 +69,8 @@ export default function CheckinHistory({ goalId, checkins, userEmail, onCheckinA
         },
         body: JSON.stringify({
           text: checkinText,
-          userEmail: userEmail
+          userEmail: userEmail,
+          duration: duration  // Pass duration for stats tracking
         }),
       });
 
@@ -135,7 +136,7 @@ export default function CheckinHistory({ goalId, checkins, userEmail, onCheckinA
   return (
     <div className="bg-white border-2 border-gray-200 rounded-2xl p-6">
       <h3 className="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
-        <Clock className="w-5 h-5 text-indigo-600" />
+        <Clock className="w-5 h-5 text-blue-600" />
         Activity Timeline
         <span className="ml-auto text-sm font-normal text-gray-500">
           {checkins.length} {checkins.length === 1 ? 'entry' : 'entries'}

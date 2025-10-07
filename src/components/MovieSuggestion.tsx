@@ -76,7 +76,7 @@ const MovieSuggestion: React.FC<MovieSuggestionProps> = ({ userEmail }) => {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100">
       <div className="flex items-center gap-2 mb-4">
-        <Film className="w-6 h-6 text-purple-600" />
+        <Film className="w-6 h-6 text-green-600" />
         <h2 className="text-xl font-semibold text-gray-800">Movie Assistant</h2>
       </div>
 
@@ -134,8 +134,8 @@ const MovieSuggestion: React.FC<MovieSuggestionProps> = ({ userEmail }) => {
       {/* Movie Suggestion Display */}
       {suggestion && (
         <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <h3 className="font-semibold text-purple-800 mb-2">Movie Suggestion:</h3>
-          <p className="text-purple-700 leading-relaxed">{suggestion}</p>
+          <h3 className="font-semibold text-green-800 mb-2">Movie Suggestion:</h3>
+          <p className="text-green-700 leading-relaxed">{suggestion}</p>
         </div>
       )}
     </div>

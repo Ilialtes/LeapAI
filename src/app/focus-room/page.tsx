@@ -478,7 +478,7 @@ export default function FocusRoomPage() {
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Please sign in to access Focus Room</h1>
-          <Link href="/auth/signin" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg">
+          <Link href="/auth/signin" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">
             Sign In
           </Link>
         </div>
@@ -718,10 +718,10 @@ export default function FocusRoomPage() {
                     setShowTaskInput(true);
                     window.location.reload();
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors text-xs"
+                  className="px-3 py-1.5 rounded-lg bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 transition-colors text-xs"
                   title="Simulate yesterday's task (dev only)"
                 >
-                  <span className="text-purple-600 font-medium">📅 Test Yesterday</span>
+                  <span className="text-yellow-700 font-medium">📅 Test Yesterday</span>
                 </button>
               )}
             </div>
@@ -817,10 +817,17 @@ export default function FocusRoomPage() {
             </div>
 
             {/* Exit Button - Center */}
-            <div className="flex-1 flex justify-center">
+            <div className="flex-1 flex justify-center gap-3">
+              <Link
+                href="/goals?spark=false"
+                className="bg-white hover:bg-gray-50 font-medium py-1.5 px-3 rounded-lg border transition-colors text-sm cursor-pointer"
+                style={{color: '#546E7A', borderColor: '#546E7A'}}
+              >
+                View My Goals
+              </Link>
               <button
                 onClick={handleExit}
-                className="bg-white hover:bg-gray-50 font-medium py-1.5 px-3 rounded-lg border transition-colors text-sm"
+                className="bg-white hover:bg-gray-50 font-medium py-1.5 px-3 rounded-lg border transition-colors text-sm cursor-pointer"
                 style={{color: '#546E7A', borderColor: '#546E7A'}}
               >
                 I'm Done for Now

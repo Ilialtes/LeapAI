@@ -1,7 +1,7 @@
 // src/components/layout/AppNavbar.tsx
 import React from 'react';
 import Link from 'next/link';
-import { BookText, Search, UserCircle2 } from 'lucide-react'; // Or your preferred avatar placeholder
+import { Target, Search, UserCircle2 } from 'lucide-react';
 
 interface NavLinkProps {
   href: string;
@@ -15,8 +15,8 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, isActive }) => {
       href={href}
       className={`px-3 py-2 rounded-md text-sm font-medium transition-colors
         ${isActive
-          ? 'text-indigo-600 font-semibold'
-          : 'text-gray-600 hover:text-indigo-600 hover:bg-indigo-50'
+          ? 'text-green-600 font-semibold'
+          : 'text-gray-600 hover:text-green-600 hover:bg-green-50'
         }
       `}
     >
@@ -43,7 +43,7 @@ const AppNavbar: React.FC = () => {
           {/* Left Side: Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/dashboard" className="flex items-center gap-2 group">
-              <BookText className="w-7 h-7 text-blue-600 group-hover:text-blue-700 transition-colors" />
+              <Target className="w-7 h-7 text-green-600 group-hover:text-green-700 transition-colors" />
               <span className="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors">Leap AI</span>
             </Link>
           </div>

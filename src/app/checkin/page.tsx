@@ -31,7 +31,7 @@ export default function DailyCheckinPage() {
         <section className="w-full max-w-2xl mt-8">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Quick Check-in</h2>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4"> {/* Responsive flex direction */}
-            <button className="flex-1 bg-indigo-100 text-indigo-700 rounded-lg py-3 px-4 font-semibold flex items-center justify-center gap-2 hover:bg-indigo-200 transition-colors">
+            <button className="flex-1 bg-blue-100 text-blue-700 rounded-lg py-3 px-4 font-semibold flex items-center justify-center gap-2 hover:bg-blue-200 transition-colors">
               <Smile className="w-5 h-5" />
               <span>Feeling Great</span>
             </button>
@@ -53,7 +53,7 @@ export default function DailyCheckinPage() {
         </section>
 
         <div className="w-full max-w-2xl mt-10 sm:mt-12">
-          <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 sm:px-12 rounded-lg shadow-md flex items-center justify-center gap-2 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 sm:px-12 rounded-lg shadow-md flex items-center justify-center gap-2 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             <Send className="w-5 h-5" />
             <span>Submit Update</span>
           </button>

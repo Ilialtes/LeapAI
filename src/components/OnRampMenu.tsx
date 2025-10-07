@@ -32,7 +32,7 @@ const typeIcons = {
 };
 
 const typeColors = {
-  warmup: 'from-purple-50 to-purple-100 border-purple-300 hover:border-purple-500',
+  warmup: 'from-green-50 to-green-100 border-purple-300 hover:border-purple-500',
   direct: 'from-green-50 to-green-100 border-green-300 hover:border-green-500',
   mindset: 'from-blue-50 to-blue-100 border-blue-300 hover:border-blue-500',
   physical: 'from-orange-50 to-orange-100 border-orange-300 hover:border-orange-500',
@@ -41,7 +41,7 @@ const typeColors = {
 };
 
 const typeTextColors = {
-  warmup: 'text-purple-700',
+  warmup: 'text-green-700',
   direct: 'text-green-700',
   mindset: 'text-blue-700',
   physical: 'text-orange-700',

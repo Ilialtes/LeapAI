@@ -39,7 +39,7 @@ export default function CelebrationPage() {
           </div>
 
           <div className="mt-8 w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-sm transition-colors duration-150 flex items-center justify-center gap-2 text-sm sm:text-base">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-sm transition-colors duration-150 flex items-center justify-center gap-2 text-sm sm:text-base">
               <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>Share Your Win</span>
             </button>

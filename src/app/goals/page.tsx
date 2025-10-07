@@ -189,7 +189,7 @@ export default function GoalsPage() {
                 </button>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 whitespace-nowrap"
                 >
                   <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span>New Goal</span>
@@ -206,7 +206,7 @@ export default function GoalsPage() {
 
         {!showGoalSpark && loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
         ) : !showGoalSpark ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -238,7 +238,7 @@ export default function GoalsPage() {
                       {goal.title}
                     </h3>
                     <div className="flex items-center gap-2">
-                      <span className="inline-block bg-indigo-100 text-indigo-800 text-xs font-medium px-2 py-1 rounded">
+                      <span className="inline-block bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
                         {goal.category}
                       </span>
                       <span className={`inline-block text-xs font-medium px-2 py-1 rounded ${
@@ -255,11 +255,11 @@ export default function GoalsPage() {
                   <div className="mb-4">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium text-gray-600">Progress</span>
-                      <span className="text-sm font-semibold text-indigo-600">{goal.progress}%</span>
+                      <span className="text-sm font-semibold text-blue-600">{goal.progress}%</span>
                     </div>
                     <ProgressBar
                       progress={goal.progress}
-                      barColor="bg-indigo-500"
+                      barColor="bg-blue-500"
                       height="h-2"
                     />
                   </div>
@@ -312,7 +312,7 @@ export default function GoalsPage() {
             <p className="text-gray-500 mb-6">Start your journey by creating your first goal</p>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 mx-auto"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm flex items-center gap-2 mx-auto"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Create Your First Goal</span>
