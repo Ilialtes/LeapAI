@@ -344,14 +344,16 @@ export default function FocusRoomPage() {
     }
 
     // Wait a moment for the pause to complete
-    await new Promise(resolve => setTimeout(resolve, 150));
+    await new Promise(resolve => setTimeout(resolve, 100));
 
-    // Only play audio if the element is still in the DOM and ready
-    if (newSound === 'brown' && brownNoiseRef.current && brownNoiseRef.current.readyState >= 2) {
+    // For mobile: Try to play immediately on user interaction
+    if (newSound === 'brown' && brownNoiseRef.current) {
       try {
         console.log('Attempting to play brown noise');
         brownNoiseRef.current.loop = true;
         brownNoiseRef.current.volume = 0.5;
+        // Load and play - important for mobile
+        brownNoiseRef.current.load();
         await brownNoiseRef.current.play();
         console.log('Brown noise playing successfully');
       } catch (error) {
@@ -359,11 +361,13 @@ export default function FocusRoomPage() {
         // Reset sound state if play fails
         setActiveSound('mute');
       }
-    } else if (newSound === 'rain' && rainRef.current && rainRef.current.readyState >= 2) {
+    } else if (newSound === 'rain' && rainRef.current) {
       try {
         console.log('Attempting to play rain');
         rainRef.current.loop = true;
         rainRef.current.volume = 0.5;
+        // Load and play - important for mobile
+        rainRef.current.load();
         await rainRef.current.play();
         console.log('Rain playing successfully');
       } catch (error) {
@@ -386,35 +390,36 @@ export default function FocusRoomPage() {
     }
 
     // If starting timer and user has selected a sound, play it
+    // Mobile browsers require user interaction to play audio
     if (newIsRunning && activeSound !== 'mute') {
       console.log('Timer started, playing selected sound:', activeSound);
-      setTimeout(() => {
-        if (activeSound === 'brown' && brownNoiseRef.current && brownNoiseRef.current.readyState >= 2) {
-          try {
-            brownNoiseRef.current.loop = true;
-            brownNoiseRef.current.volume = 0.5;
-            brownNoiseRef.current.play().then(() => {
-              console.log('Brown noise started with timer');
-            }).catch((error) => {
-              console.error('Failed to start brown noise with timer:', error);
-            });
-          } catch (error) {
-            console.error('Error setting up brown noise:', error);
-          }
-        } else if (activeSound === 'rain' && rainRef.current && rainRef.current.readyState >= 2) {
-          try {
-            rainRef.current.loop = true;
-            rainRef.current.volume = 0.5;
-            rainRef.current.play().then(() => {
-              console.log('Rain started with timer');
-            }).catch((error) => {
-              console.error('Failed to start rain with timer:', error);
-            });
-          } catch (error) {
-            console.error('Error setting up rain:', error);
-          }
+      if (activeSound === 'brown' && brownNoiseRef.current) {
+        try {
+          brownNoiseRef.current.loop = true;
+          brownNoiseRef.current.volume = 0.5;
+          brownNoiseRef.current.load(); // Important for mobile
+          brownNoiseRef.current.play().then(() => {
+            console.log('Brown noise started with timer');
+          }).catch((error) => {
+            console.error('Failed to start brown noise with timer:', error);
+          });
+        } catch (error) {
+          console.error('Error setting up brown noise:', error);
         }
-      }, 100); // Small delay to ensure DOM is stable
+      } else if (activeSound === 'rain' && rainRef.current) {
+        try {
+          rainRef.current.loop = true;
+          rainRef.current.volume = 0.5;
+          rainRef.current.load(); // Important for mobile
+          rainRef.current.play().then(() => {
+            console.log('Rain started with timer');
+          }).catch((error) => {
+            console.error('Failed to start rain with timer:', error);
+          });
+        } catch (error) {
+          console.error('Error setting up rain:', error);
+        }
+      }
     }
   };
 
@@ -626,12 +631,12 @@ export default function FocusRoomPage() {
                   onClick={resumeYesterdaysTask}
                   className="w-full px-4 py-3 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors group"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 text-left">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex-1 text-left min-w-0">
                       <p className="text-xs font-medium text-blue-600 mb-1">Continue from yesterday</p>
                       <p className="text-sm text-blue-800 font-medium truncate">{yesterdaysTask}</p>
                     </div>
-                    <div className="ml-3 text-blue-600">
+                    <div className="flex-shrink-0 text-blue-600">
                       <Play className="w-4 h-4" />
                     </div>
                   </div>

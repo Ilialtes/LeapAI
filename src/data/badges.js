@@ -266,7 +266,7 @@ export const BADGES = [
   {
     id: 'pioneer',
     name: 'Pioneer',
-    description: 'One of the first 100 users of Leap AI',
+    description: 'One of the first 100 users of SubtlePush',
     icon: '🏁',
     category: BADGE_CATEGORIES.SPECIAL,
     rarity: BADGE_RARITY.LEGENDARY,

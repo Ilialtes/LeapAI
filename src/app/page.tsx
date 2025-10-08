@@ -32,7 +32,7 @@ export default function Home() {
             <span className="text-green-600 block">With Your Brain, Not Against It.</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Leap AI is a compassionate partner that helps you overcome motivational hurdles with personalized AI coaching, automated tracking, and a shame-free environment.
+            SubtlePush is a compassionate partner that helps you overcome motivational hurdles with personalized AI coaching, automated tracking, and a shame-free environment.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

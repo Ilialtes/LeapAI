@@ -543,7 +543,7 @@ export default function SettingsPage() {
               {subscriptionData.status === 'trial' && subscriptionData.daysRemaining <= 3 && (
                 <div className="bg-orange-100 border border-orange-300 rounded-lg p-4 mb-4">
                   <p className="text-orange-800 font-medium">
-                    Your trial is ending soon! Choose a plan below to continue using Leap AI.
+                    Your trial is ending soon! Choose a plan below to continue using SubtlePush.
                   </p>
                 </div>
               )}

@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Leap AI",
-  description: "AI-powered goal tracking and assistance",
+  title: "SubtlePush - Focus App That Works With Your Brain",
+  description: "A compassionate partner that helps you overcome motivational hurdles with personalized AI coaching, automated tracking, and a shame-free environment.",
 };
 
 export default function RootLayout({

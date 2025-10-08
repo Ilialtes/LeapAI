@@ -24,7 +24,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
     <header className={headerClasses}>
       <Link href="/dashboard" className="flex items-center gap-2 group">
         <BookText className="w-7 h-7 text-blue-600 group-hover:text-blue-700 transition-colors" />
-        <span className="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors">Leap AI</span>
+        <span className="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors">SubtlePush</span>
       </Link>
       <div className="flex items-center gap-3 sm:gap-4">
         {showSettingsIcon && (

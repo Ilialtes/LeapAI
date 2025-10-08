@@ -11,6 +11,28 @@ interface TrialBannerProps {
 export default function TrialBanner({ userEmail }: TrialBannerProps) {
   const [daysRemaining, setDaysRemaining] = useState<number | null>(null);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [trialEndDate, setTrialEndDate] = useState<string | null>(null);
+
+  // Calculate days remaining from end date
+  useEffect(() => {
+    if (!trialEndDate) return;
+
+    const calculateDaysRemaining = () => {
+      const now = new Date();
+      const endDate = new Date(trialEndDate);
+      const diffTime = endDate.getTime() - now.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      setDaysRemaining(diffDays);
+    };
+
+    // Calculate immediately
+    calculateDaysRemaining();
+
+    // Recalculate every hour to keep it updated
+    const interval = setInterval(calculateDaysRemaining, 1000 * 60 * 60);
+
+    return () => clearInterval(interval);
+  }, [trialEndDate]);
 
   useEffect(() => {
     // Check if banner was dismissed for this session
@@ -26,8 +48,8 @@ export default function TrialBanner({ userEmail }: TrialBannerProps) {
         const response = await fetch(`/api/user-trial-status?email=${encodeURIComponent(userEmail)}`);
         const data = await response.json();
 
-        if (data.success && data.trialActive) {
-          setDaysRemaining(data.daysRemaining);
+        if (data.success && data.trialActive && data.trialEndsAt) {
+          setTrialEndDate(data.trialEndsAt);
         }
       } catch (error) {
         console.error('Failed to fetch trial status:', error);

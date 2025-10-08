@@ -52,7 +52,7 @@ export default function CelebrationPage() {
 
       {/* Footer Section */}
       <footer className="w-full text-center text-xs text-gray-500 py-6"> {/* Changed mt-8 to py-6 for consistent padding */}
-        <p>© 2024 Leap AI. All rights reserved.</p>
+        <p>© 2024 SubtlePush. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -33,7 +33,7 @@ export default function SubscriptionRequiredPage() {
             Your Free Trial Has Ended
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Thanks for trying Leap AI! To continue using the app and keep building momentum, choose a plan below.
+            Thanks for trying SubtlePush! To continue using the app and keep building momentum, choose a plan below.
           </p>
         </div>
 
@@ -129,7 +129,7 @@ export default function SubscriptionRequiredPage() {
 
         {/* Why Continue Section */}
         <div className="bg-white rounded-xl shadow-md p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Why users love Leap AI</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Why users love SubtlePush</h2>
 
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">

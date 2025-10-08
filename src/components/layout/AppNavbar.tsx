@@ -44,7 +44,7 @@ const AppNavbar: React.FC = () => {
           <div className="flex-shrink-0 flex items-center">
             <Link href="/dashboard" className="flex items-center gap-2 group">
               <Target className="w-7 h-7 text-green-600 group-hover:text-green-700 transition-colors" />
-              <span className="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors">Leap AI</span>
+              <span className="text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors">SubtlePush</span>
             </Link>
           </div>
 

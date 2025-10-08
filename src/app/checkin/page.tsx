@@ -42,9 +42,9 @@ export default function DailyCheckinPage() {
           </div>
         </section>
 
-        {/* "Leap AI's Response" Section */}
+        {/* "SubtlePush's Response" Section */}
         <section className="w-full max-w-2xl mt-8">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">Leap AI's Response</h2>
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">SubtlePush's Response</h2>
           <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100"> {/* Added border */}
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
               That's fantastic, Sarah! Keep up the great work. Remember, consistency is key to achieving your goals. If you need any support or have questions, feel free to ask. I'm here to help you leap towards success!
@@ -62,7 +62,7 @@ export default function DailyCheckinPage() {
 
       {/* Optional Footer (can be added later if design requires) */}
       {/* <footer className="text-center text-xs text-gray-400 py-4">
-           <p>© 2025 Leap AI. All rights reserved.</p>
+           <p>© 2025 SubtlePush. All rights reserved.</p>
          </footer> */}
     </div>
   );

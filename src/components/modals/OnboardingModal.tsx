@@ -80,7 +80,7 @@ export default function OnboardingModal({ isOpen, onClose, onComplete, userName 
                 <Rocket className="w-8 h-8 text-green-600" />
               </div>
               <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                Welcome to Leap AI, {userName}!
+                Welcome to SubtlePush, {userName}!
               </h2>
               <p className="text-lg text-gray-600 max-w-md mx-auto">
                 Let&apos;s take 60 seconds to personalize your experience. This helps your AI Coach give you the best possible support.

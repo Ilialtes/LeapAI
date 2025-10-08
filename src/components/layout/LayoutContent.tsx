@@ -93,7 +93,7 @@ function LayoutContent({ children }: LayoutContentProps) {
         {children}
       </div>
       <footer className="text-center text-xs text-gray-400 py-4 bg-slate-50">
-        <p>© 2025 Leap AI. All rights reserved.</p>
+        <p>© 2025 SubtlePush. All rights reserved.</p>
       </footer>
 
       {/* Onboarding Modal */}
